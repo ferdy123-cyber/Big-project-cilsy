@@ -15,17 +15,19 @@ const Payment = ({
   transaction,
   transactionById,
 }) => {
-  useEffect(() => {
+  const load = () => {
     getTransaction();
-  }, [getTransaction]);
+  };
+  console.log(transaction);
   const trscPending =
     transaction && transaction.filter((e) => e.status === "Pending");
 
   const linkCart = trscPending.map((e) => e.id);
+  const logedIn = localStorage.getItem("login");
   useEffect(() => {
     getTransactionById(linkCart);
   }, [getTransactionById, linkCart]);
-  const logedIn = localStorage.getItem("login");
+  console.log(linkCart);
 
   const payNow = (val) => {
     axios
@@ -45,7 +47,10 @@ const Payment = ({
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-5 bg-body rounded fixed-top">
+      <nav
+        onLoad={load}
+        class="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3 mb-5 bg-body rounded fixed-top"
+      >
         <div class="container-fluid">
           <p class="navbar-brand user">
             {logedIn === "true" && <UserManage />}
