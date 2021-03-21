@@ -11,6 +11,10 @@ const addOrder = async (req, res, next) => {
       },
     });
 
+    if (user.role === "admin") {
+      throw new Error("Admin can not order the product");
+    }
+
     if (product.stock === 0) {
       throw new Error("Stock empty");
     }
